@@ -49,5 +49,5 @@ bash >= 3.2 (macOS system bash works) and git. No other dependencies.
 
 Full behavior reference (path conventions, worktree lifecycle, edge cases):
 [docs/worktrees.md](docs/worktrees.md). Tests: `tests/integration.sh`
-(52 tests against real temporary repos) and `tests/dispatcher.sh` (routing,
-help/version, symlinked invocation).
+(integration suite against real temporary repos) and `tests/dispatcher.sh`
+(routing, help/version, symlinked invocation).

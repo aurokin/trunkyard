@@ -4,6 +4,7 @@
 #   trunkyard status [path]     workspace git status across repos (alias: gwss)
 #   trunkyard pull   [path]     pull repos discovered by status   (alias: gwp)
 #   trunkyard new    <branch>   centralized worktree at ~/worktrees/<project>/<branch> (alias: gwt)
+#   trunkyard -V | --version    print version
 set -euo pipefail
 
 # Resolve symlinks (mise shims / ~/.local/bin installs) so libexec/ is found
@@ -18,7 +19,7 @@ script_dir="$(cd "$(dirname "$src")" && pwd -P)"
 libexec="$script_dir/../libexec"
 
 usage() {
-  sed -n '2,6p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
+  sed -n '2,7p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
 }
 
 cmd="${1:-}"

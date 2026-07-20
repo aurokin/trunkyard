@@ -13,7 +13,7 @@
 ## Commands
 | Task | Command |
 |------|---------|
-| Integration tests (52, real temp repos) | `tests/integration.sh` |
+| Integration tests (real temp repos) | `tests/integration.sh` |
 | Dispatcher tests (routing, symlink regression) | `tests/dispatcher.sh` |
 | Syntax check | `bash -n bin/trunkyard libexec/*.sh lib/*.sh` |
 | Release | `scripts/release.sh vX.Y.Z` |

@@ -21,6 +21,8 @@ cp -R bin libexec lib LICENSE "$stage/trunkyard/"
 # Stamp the version the dispatcher reports. BSD/macOS sed — releases are cut
 # from the author's Mac; GNU sed would need `sed -i` without the ''.
 sed -i '' "s/\${TRUNKYARD_VERSION:-dev}/\${TRUNKYARD_VERSION:-$version}/" "$stage/trunkyard/bin/trunkyard"
+grep -q "TRUNKYARD_VERSION:-$version" "$stage/trunkyard/bin/trunkyard" \
+  || { echo "version stamp failed (dispatcher default line moved?)" >&2; exit 1; }
 tar -czf "$stage/trunkyard.tar.gz" -C "$stage" trunkyard
 
 # Idempotent on retry: skip tagging if the tag already points at HEAD.
@@ -31,5 +33,9 @@ else
   git tag "$version"
 fi
 git push -q origin HEAD "$version"
-gh release create "$version" "$stage/trunkyard.tar.gz" --title "$version" --notes "trunkyard $version"
+# Retry-safe: create the release only if absent, then (re)upload the asset.
+if ! gh release view "$version" >/dev/null 2>&1; then
+  gh release create "$version" --title "$version" --notes "trunkyard $version"
+fi
+gh release upload "$version" "$stage/trunkyard.tar.gz" --clobber
 echo "released $version"
