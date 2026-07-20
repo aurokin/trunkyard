@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-script_name="$(basename "$0")"
+script_name="${TRUNKYARD_CMD:-$(basename "$0")}"
 script_dir="$(
   cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null
   pwd -P
@@ -14,13 +14,13 @@ resolved_remote_name=""
 resolved_remote_branch=""
 
 usage() {
-  cat <<'EOF'
+  cat <<EOF
 Usage:
-  git-new-worktree.sh <branch>
+  $script_name <branch>
 
 Examples:
-  git-new-worktree.sh feature/login
-  git-new-worktree.sh release
+  $script_name feature/login
+  $script_name release
 
 Behavior:
   - Must be run inside a git checkout.

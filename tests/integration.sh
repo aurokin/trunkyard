@@ -10,7 +10,7 @@ ROOT_DIR="$(
 NEW_WORKTREE_SCRIPT="$ROOT_DIR/libexec/git-new-worktree.sh"
 WORKSPACE_SCRIPT="$ROOT_DIR/libexec/git-workspace.sh"
 
-TEST_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-worktree-tests.XXXXXX")"
+TEST_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/trunkyard-tests.XXXXXX")"
 PASS_COUNT=0
 
 cleanup() {

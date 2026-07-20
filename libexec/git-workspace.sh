@@ -2,7 +2,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-script_name="$(basename "$0")"
+script_name="${TRUNKYARD_CMD:-$(basename "$0")}"
 readonly STATUS_ROW_SEP=$'\x1f'
 script_dir="$(
   cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null

@@ -6,10 +6,15 @@
 #   trunkyard new    <branch>   centralized worktree at ~/worktrees/<project>/<branch> (alias: gwt)
 set -euo pipefail
 
-script_dir="$(
-  cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null
-  pwd -P
-)"
+# Resolve symlinks (mise shims / ~/.local/bin installs) so libexec/ is found
+# relative to the real file, not the symlink.
+src="${BASH_SOURCE[0]}"
+while [ -L "$src" ]; do
+  src_dir="$(cd "$(dirname "$src")" && pwd -P)"
+  src="$(readlink "$src")"
+  [[ "$src" != /* ]] && src="$src_dir/$src"
+done
+script_dir="$(cd "$(dirname "$src")" && pwd -P)"
 libexec="$script_dir/../libexec"
 
 usage() {
@@ -19,11 +24,11 @@ usage() {
 cmd="${1:-}"
 case "$cmd" in
   status|pull)
-    exec "$libexec/git-workspace.sh" "$@"
+    TRUNKYARD_CMD="trunkyard" exec "$libexec/git-workspace.sh" "$@"
     ;;
   new)
     shift
-    exec "$libexec/git-new-worktree.sh" "$@"
+    TRUNKYARD_CMD="trunkyard new" exec "$libexec/git-new-worktree.sh" "$@"
     ;;
   -h|--help|"")
     usage
