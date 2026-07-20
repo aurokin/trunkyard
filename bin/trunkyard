@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# trunkyard — centralized git worktrees and workspace-wide git operations.
+#
+#   trunkyard status [path]     workspace git status across repos (alias: gwss)
+#   trunkyard pull   [path]     pull repos discovered by status   (alias: gwp)
+#   trunkyard new    <branch>   centralized worktree at ~/worktrees/<project>/<branch> (alias: gwt)
+set -euo pipefail
+
+script_dir="$(
+  cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null
+  pwd -P
+)"
+libexec="$script_dir/../libexec"
+
+usage() {
+  sed -n '2,6p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
+}
+
+cmd="${1:-}"
+case "$cmd" in
+  status|pull)
+    exec "$libexec/git-workspace.sh" "$@"
+    ;;
+  new)
+    shift
+    exec "$libexec/git-new-worktree.sh" "$@"
+    ;;
+  -h|--help|"")
+    usage
+    exit 0
+    ;;
+  -V|--version)
+    echo "trunkyard ${TRUNKYARD_VERSION:-dev}"
+    exit 0
+    ;;
+  *)
+    echo "trunkyard: unknown command: $cmd" >&2
+    usage >&2
+    exit 2
+    ;;
+esac
