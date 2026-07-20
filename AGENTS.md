@@ -1,8 +1,7 @@
 # Agent Instructions
 
 ## Status
-- Pre-cutover: canonical copies of `libexec/*` and `lib/*` live in `~/.dotfiles/zsh/.zshrc.d/scripts/` and are in daily use there.
-- Behavior parity with the dotfiles copies is the contract; behavioral changes must be deliberate and noted in commit messages.
+- This repo is canonical; it shipped from a dotfiles extraction (see `docs/worktrees.md` for the behavior contract the extraction preserved).
 
 ## Layout
 - `bin/trunkyard` — thin dispatcher (`status`/`pull` → `libexec/git-workspace.sh`, `new` → `libexec/git-new-worktree.sh`).

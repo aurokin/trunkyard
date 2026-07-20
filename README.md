@@ -10,9 +10,6 @@ Centralized git worktrees and workspace-wide git operations, as one small CLI.
   `~/worktrees/<project>/<branch>` (`^` in the path stands in for `/` in
   branch names), reusing the branch or remote tracking ref when one exists.
 
-> Status: in development, pre-cutover. The canonical copies still live in the
-> author's dotfiles; this repo becomes canonical at cutover.
-
 ## Install
 
 Via [mise](https://mise.jdx.dev)'s github backend (a release ships a
